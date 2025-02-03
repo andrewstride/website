@@ -8,11 +8,8 @@ terraform {
 }
 
 provider "aws" {
-  region = var.AWS_REGION
+  region  = var.AWS_REGION
   profile = var.AWS_PROFILE
-  assume_role {
-    role_arn = "arn:aws:iam::650251716475:user/website-terraform"
-  }
 }
 
 terraform {
