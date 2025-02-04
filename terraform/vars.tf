@@ -12,3 +12,8 @@ variable "website-bucket" {
   type    = string
   default = null
 }
+
+variable "log-bucket" {
+  type    = string
+  default = null
+}
