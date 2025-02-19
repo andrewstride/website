@@ -1,3 +1,4 @@
+# Website bucket
 resource "aws_s3_bucket" "website-bucket" {
   bucket = "${var.website-bucket}"
 }
@@ -61,7 +62,11 @@ resource "aws_s3_bucket_website_configuration" "website-config" {
   index_document {
     suffix = "index.html"
   }
+  error_document {
+    key = "index.html"
+  }
 }
+
 
 # Upload HTML files
 resource "aws_s3_object" "object-upload-html" {
