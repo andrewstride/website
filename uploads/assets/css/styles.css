@@ -84,3 +84,13 @@ hr {
     background-color: #ccc;
     margin: 20px 0;
 }
+
+.counter {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.error-message {
+    color: red;
+    margin-top: 1rem;
+}
