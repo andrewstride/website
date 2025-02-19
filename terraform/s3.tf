@@ -100,3 +100,14 @@ resource "aws_s3_object" "object-upload-css" {
   content_type = "text/css"
   etag         = filemd5("../uploads/assets/css/${each.value}")
 }
+
+# Upload JS files
+resource "aws_s3_object" "object-upload-js" {
+  for_each = fileset("../uploads/", "*.js")
+
+  bucket       = data.aws_s3_bucket.selected-bucket.bucket
+  key          = each.value
+  source       = "../uploads/${each.value}"
+  content_type = "application/javascript"
+  etag         = filemd5("../uploads/${each.value}")
+}
