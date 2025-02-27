@@ -13,9 +13,19 @@ async function updateVisitorCount() {
             throw new Error('Failed to fetch visitor count.');
         }
         const data = await response.json();
-        const count = data.visitCount
+        const count = data.visitCount;
+        // api request to get trivia with visitor count
+        const triviaUrl = `https://corsproxy.io/?url=http://numbersapi.com/${count}/trivia?json`;
+        const triviaResponse =  await fetch(triviaUrl);
+        if (!triviaResponse.ok) {
+            throw new Error('Failed to fetch trivia.');
+        }
+       
+        const triviaData = await triviaResponse.json();
+        const trivia = triviaData.text || 'No trivia available';
+
         // Display visitor count in the 'visitor-count' element
-        visitorCountElement.innerText = `${count} visitors`;
+        visitorCountElement.innerText = `${count} visitors - ${trivia}`;
     } catch (error) {
         visitorCountElement.textContent = 'Error loading visitor count';
         errorMessageElement.textContent = `Error Message: ${error.message}`;
