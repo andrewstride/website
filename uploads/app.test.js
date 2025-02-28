@@ -3,7 +3,7 @@
  */
 
 const { updateVisitorCount } = require('./app');
-const { waitFor } = require('@testing-library/dom'); // Correct import path
+const { waitFor } = require('@testing-library/dom');
 const fetchMock = require('jest-fetch-mock');
 fetchMock.enableMocks();
 
