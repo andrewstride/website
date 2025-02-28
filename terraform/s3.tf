@@ -103,7 +103,7 @@ resource "aws_s3_object" "object-upload-css" {
 
 # Upload JS files
 resource "aws_s3_object" "object-upload-js" {
-  for_each = fileset("../uploads/", "*.js")
+  for_each = fileset("../uploads/", "app.js")
 
   bucket       = data.aws_s3_bucket.selected-bucket.bucket
   key          = each.value
