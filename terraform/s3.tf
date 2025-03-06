@@ -90,6 +90,17 @@ resource "aws_s3_object" "object-upload-png" {
   etag         = filemd5("../uploads/assets/images/${each.value}")
 }
 
+# Upload GIF files
+resource "aws_s3_object" "object-upload-gif" {
+  for_each = fileset("../uploads/assets/images/", "*.gif")
+
+  bucket       = data.aws_s3_bucket.selected-bucket.bucket
+  key          = "assets/images/${each.value}"
+  source       = "../uploads/assets/images/${each.value}"
+  content_type = "image/gif"
+  etag         = filemd5("../uploads/assets/images/${each.value}")
+}
+
 # Upload CSS files (styles)
 resource "aws_s3_object" "object-upload-css" {
   for_each = fileset("../uploads/assets/css/", "*.css")
