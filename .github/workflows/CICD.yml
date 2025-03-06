@@ -89,13 +89,13 @@ jobs:
         working-directory: ./terraform
 
       - name: Terraform plan
-        run: |
-          terraform plan -out=tfplan
-          echo "PLAN_OUTPUT=$(terraform show -no-color tfplan)" >> $GITHUB_ENV
+        run: terraform plan -out=tfplan
         working-directory: ./terraform
 
-      - name: Show tfplan for debugging
-        run: terraform show tfplan
+      - name: Export tfplan to env
+        run: |
+          terraform show -no-color tfplan
+          echo "PLAN_OUTPUT=$(terraform show -no-color tfplan)" >> $GITHUB_ENV
         working-directory: ./terraform
 
       - name: Add Plan Comment
