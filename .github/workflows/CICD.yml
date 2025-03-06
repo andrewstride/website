@@ -66,17 +66,24 @@ jobs:
 
       - name: Write tfvars file
         run: echo "${{ secrets.TFVARS }}" > terraform.tfvars
+        working-directory: ./terraform
 
       - name: Terraform init
         run: terraform init
+        working-directory: ./terraform
+
 
       - name: Terraform plan
         run: terraform plan -var-file=terraform.tfvars -out=tfplan
+        working-directory: ./terraform
+
 
       - name: Show tfplan for debugging
         run: terraform show tfplan
 
-      - name: Terraform apply
-        run: terraform apply --auto-approve -var-file=terraform.tfvars tfplan
+      # - name: Terraform apply
+      #   run: terraform apply --auto-approve -var-file=terraform.tfvars tfplan
+      #   working-directory: ./terraform
+
         
           
