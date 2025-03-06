@@ -70,6 +70,9 @@ jobs:
         with:
           terraform_version: '1.9.3'
 
+      - name: Debug Env variables
+        run: echo "${{ secrets.AWS_PROFILE }}"
+
       - name: Terraform init
         run: terraform init
         working-directory: ./terraform
