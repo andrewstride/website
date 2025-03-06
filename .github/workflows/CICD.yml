@@ -76,7 +76,7 @@ jobs:
         run: |
           mkdir -p ~/.aws
           echo "[default]" > ~/.aws/config
-          echo "region=${{ secrets.AWS_REGION }}" >> ~/.aws/config
+          echo "region=${{ secrets.AWS_DEFAULT_REGION }}" >> ~/.aws/config
         
       - name: Checkout repository
         uses: actions/checkout@v4
