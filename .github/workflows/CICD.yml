@@ -52,7 +52,7 @@ jobs:
     name: Terraform Plan and Apply
     environment: production
     env:
-          TF_VAR_AWS_PROFILE: "default"
+          TF_VAR_AWS_PROFILE: default
           TF_VAR_AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
           TF_VAR_website-bucket: ${{ secrets.WEBSITE_BUCKET }}
           TF_VAR_log-bucket: ${{ secrets.LOG_BUCKET }}
