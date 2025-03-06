@@ -1,61 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Andrew Stride | Projects</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <img src="assets/images/andrew stride headshot circle.png" alt="Andrew Stride Headshot" width="200" height=auto />
-            <div class="text-content">
-                <h1>Andrew Stride</h1>
-                <p>Data Engineer</p>
-                <a href="https://www.linkedin.com/in/-andrew-stride-/"><img src="assets/images/16-linkedin.png" alt="Andrew Stride LinkedIn Profile" class="greyscale-logo"></a>
-                <a href="https://github.com/andrewstride"><img src="assets/images/github logo.png" alt="Andrew Stride GitHub Profile" class="greyscale-logo"></a>
-                <p><a href="index.html">CV</a> | Projects</p>
-            </div>
-            </div>
+      <div class="header-content">
+        <img
+          src="assets/images/andrew stride headshot circle.png"
+          alt="Andrew Stride Headshot"
+          width="200"
+          height="auto"
+        />
+        <div class="text-content">
+          <h1>Andrew Stride</h1>
+          <p>Data Engineer</p>
+          <a href="https://www.linkedin.com/in/-andrew-stride-/"
+            ><img
+              src="assets/images/16-linkedin.png"
+              alt="Andrew Stride LinkedIn Profile"
+              class="greyscale-logo"
+          /></a>
+          <a href="https://github.com/andrewstride"
+            ><img
+              src="assets/images/github logo.png"
+              alt="Andrew Stride GitHub Profile"
+              class="greyscale-logo"
+          /></a>
+          <p><a href="index.html">CV</a> | Projects</p>
+        </div>
+      </div>
     </header>
 
     <section id="projects">
-        <h2>Projects</h2>
+      <h2>Projects</h2>
 
-        <h3><a href="https://github.com/andrewstride/NC-ETL-project/blob/main/README.md">ETL Data Platform</a></h3>
-        <p><em>Oct 2024</em></p>
-        <div class="header-content">
-            <a href="assets/images/ETL-pipeline-diagram.png"><img src="assets/images/ETL-pipeline-diagram.png" alt="ETL Data Platform Diagram" class="project-image-large"></a>
-        </div>
-        <ul>
-            <li>Deployed using Terraform, AWS, CI/CD through Github, Python, Bash and PostgreSQL</li>
-            <li>Data is regularly extracted from OLTP database, transformed into a star-schema format and loaded into an OLAP data warehouse</li>
-            <li>Processes are logged and alerts are triggered in the event of an error</li>
-            <li>AWS Infrastructure: Lambda, S3, CloudWatch, SNS, EventBridge, StepFunction, Secrets Manager</li>
-            <li>95% Test coverage achieved through Test-Driven Development, unit and integration testing, and test database</li>
-        </ul>
+      <h3>
+        <a
+          href="https://github.com/andrewstride/NC-ETL-project/blob/main/README.md"
+          >ETL Data Platform</a
+        >
+      </h3>
+      <p><em>Oct 2024</em></p>
+      <div class="header-content">
+        <a href="assets/images/ETL-pipeline-diagram.png"
+          ><img
+            src="assets/images/ETL-pipeline-diagram.png"
+            alt="ETL Data Platform Diagram"
+            class="project-image-large"
+        /></a>
+      </div>
+      <ul>
+        <li>
+          Deployed using Terraform, AWS, CI/CD through Github, Python, Bash and
+          PostgreSQL
+        </li>
+        <li>
+          Data is regularly extracted from OLTP database, transformed into a
+          star-schema format and loaded into an OLAP data warehouse
+        </li>
+        <li>
+          Processes are logged and alerts are triggered in the event of an error
+        </li>
+        <li>
+          AWS Infrastructure: Lambda, S3, CloudWatch, SNS, EventBridge,
+          StepFunction, Secrets Manager
+        </li>
+        <li>
+          95% Test coverage achieved through Test-Driven Development, unit and
+          integration testing, and test database
+        </li>
+      </ul>
 
-        <h3>Cloud Engineered CV Project</h3>
-        <p><em>Jan - Feb 2025</em></p>
-        <div class="header-content">
-            <a href="assets/images/VisitorCounterGif.gif"><img src="assets/images/VisitorCounterGif.gif" alt="Visitor Counter GIF" class="project-image-small"></a>
-        </div>
-        <ul><li>Created static website using cloud infrastructure and methodologies</li>
-            <li>AWS Infrastrcture: Cloudfront, Route 53, S3, API Gateway, Lambda, DynamoDB</li>
-            <li>Visitor Counter feature using AWS DynamoDB, Lambda and API Gateway</li>
-            <li>Tested Javascript to make API calls to Lambda and external API to fetch trivia</li>
-            <li>Deployed using Infrastructure as Code through Terraform</li>
-        </ul>
+      <h3>Cloud Engineered CV Project</h3>
+      <p><em>Jan - Feb 2025</em></p>
+      <div class="header-content">
+        <a href="assets/images/VisitorCounterGif.gif"
+          ><img
+            src="assets/images/VisitorCounterGif.gif"
+            alt="Visitor Counter GIF"
+            class="project-image-small"
+        /></a>
+      </div>
+      <ul>
+        <li>
+          Created static website using cloud infrastructure and methodologies
+        </li>
+        <li>
+          AWS Infrastrcture: Cloudfront, Route 53, S3, API Gateway, Lambda,
+          DynamoDB
+        </li>
+        <li>
+          Visitor Counter feature using AWS DynamoDB, Lambda and API Gateway
+        </li>
+        <li>
+          Tested Javascript to make API calls to Lambda and external API to
+          fetch trivia
+        </li>
+        <li>Deployed using Infrastructure as Code through Terraform</li>
+      </ul>
 
-        <h3>C# Unity-3D Video Game Project</h3>
-        <p><em>Dec 2024</em></p>
-        <a href="assets/images/GameGif.gif"><img src="assets/images/GameGif.gif" alt="C# Game Design Project GIF" class="project-image-small"></a>
+      <h3>C# Unity-3D Video Game Project</h3>
+      <p><em>Dec 2024</em></p>
+      <a href="assets/images/GameGif.gif"
+        ><img
+          src="assets/images/GameGif.gif"
+          alt="C# Game Design Project GIF"
+          class="project-image-small"
+      /></a>
 
-        <ul><li>Developed mini-adventure game featuring interactive puzzles and automated challenges</li>
+      <ul>
+        <li>
+          Developed mini-adventure game featuring interactive puzzles and
+          automated challenges
+        </li>
         <li>Learned C# fundamentals to achieve MVP within tight deadline</li>
-        <li>Features health bar, points, conditional logic, randomised enemy spawning and animations</li></ul>
-
-
+        <li>
+          Features health bar, points, conditional logic, randomised enemy
+          spawning and animations
+        </li>
+      </ul>
     </section>
-</body>
+  </body>
 </html>
