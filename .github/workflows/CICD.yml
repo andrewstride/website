@@ -76,6 +76,8 @@ jobs:
         run: terraform init
         working-directory: ./terraform
 
+      - name: Debug environment variables
+        run: env
 
       - name: Terraform plan
         run: terraform plan -out=tfplan
