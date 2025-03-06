@@ -15,7 +15,7 @@ header, footer {
 
 .header-content {
     display: flex;
-    align-items: center; /* Vertically center the items */
+    align-items:center; /* Vertically center the items */
     gap: 20px; /* Space between the image and the text */
     
 
@@ -32,13 +32,26 @@ header, footer {
     filter: grayscale(100%);
     width:20px;
     height:auto;
-    /* transition: filter 0.1s ease, transform 0.1s ease; */
 }
 
 .greyscale-logo:hover {
     filter: grayscale(100%);
-    transform: scale(1.1); /* Increases size by 20% */
+    transform: scale(1.1);
 
+}
+
+.project-image-large {
+    /* align-content: center;
+    float: right; */
+    width: 800px;
+    height: auto;
+}
+
+.project-image-small {
+    align-content: center;
+    float: right;
+    width: 250px;
+    height: auto;
 }
 
 header h1 {
