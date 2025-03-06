@@ -55,6 +55,11 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          TF_VAR_AWS_PROFILE: ${{ secrets.AWS_PROFILE }}
+          TF_VAR_AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          TF_VAR_website-bucket: ${{ secrets.WEBSITE_BUCKET }}
+          TF_VAR_log-bucket: ${{ secrets.LOG_BUCKET }}
+          
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,25 +69,18 @@ jobs:
         with:
           terraform_version: '1.9.3'
 
-      - name: Debug Tfvars file creation
-        run: echo "${{ secrets.TFVARS }}"
-
-      # - name: Write tfvars file
-      #   run: echo "${{ secrets.TFVARS }}" > terraform.tfvars
-      #   working-directory: ./terraform
-
-      # - name: Terraform init
-      #   run: terraform init
-      #   working-directory: ./terraform
+      - name: Terraform init
+        run: terraform init
+        working-directory: ./terraform
 
 
-      # - name: Terraform plan
-      #   run: terraform plan -var-file=terraform.tfvars -out=tfplan
-      #   working-directory: ./terraform
+      - name: Terraform plan
+        run: terraform plan -out=tfplan
+        working-directory: ./terraform
 
 
-      # - name: Show tfplan for debugging
-      #   run: terraform show tfplan
+      - name: Show tfplan for debugging
+        run: terraform show tfplan
 
       # - name: Terraform apply
       #   run: terraform apply --auto-approve -var-file=terraform.tfvars tfplan
