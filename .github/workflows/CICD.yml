@@ -80,11 +80,13 @@ jobs:
         working-directory: ./terraform
 
       - name: Terraform plan
-        run: terraform plan -out=plan.tfplan
+        run: terraform plan -out=tfplan
         working-directory: ./terraform
 
       - name: Show tfplan for debugging
-        run: terraform show -json plan.tfplan
+        run: terraform show -json tfplan
+        working-directory: ./terraform
+
 
       # - name: Terraform apply
       #   run: terraform apply --auto-approve -var-file=terraform.tfvars tfplan
