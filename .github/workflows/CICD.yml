@@ -89,33 +89,8 @@ jobs:
         working-directory: ./terraform
 
       - name: Terraform plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -detailed-exitcode
         working-directory: ./terraform
-
-      - name: Export tfplan to env
-        run: |
-          PLAN_OUTPUT=$(terraform show -no-color tfplan)
-          echo "PLAN_OUTPUT<<EOF" >> $GITHUB_ENV
-          echo "$PLAN_OUTPUT" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-        working-directory: ./terraform
-
-      - name: Add Plan Comment
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Terraform Plan Output
-            \`\`\`
-            ${process.env.PLAN_OUTPUT}
-            \`\`\`
-            `;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
 
 
       # - name: Terraform apply
