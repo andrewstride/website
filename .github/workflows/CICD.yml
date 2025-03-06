@@ -94,8 +94,10 @@ jobs:
 
       - name: Export tfplan to env
         run: |
-          terraform show -no-color tfplan
-          echo "PLAN_OUTPUT=$(terraform show -no-color tfplan)" >> $GITHUB_ENV
+          PLAN_OUTPUT=$(terraform show -no-color tfplan)
+          echo "PLAN_OUTPUT<<EOF" >> $GITHUB_ENV
+          echo "$PLAN_OUTPUT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
         working-directory: ./terraform
 
       - name: Add Plan Comment
