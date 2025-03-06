@@ -84,7 +84,7 @@ jobs:
         working-directory: ./terraform
 
       - name: Show tfplan for debugging
-        run: terraform show -json tfplan
+        run: terraform show tfplan
         working-directory: ./terraform
 
 
