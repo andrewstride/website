@@ -1,3 +1,7 @@
+resource "aws_s3_bucket" "test-bucket" {
+  bucket_prefix = "andrewstride-"
+}
+
 # Website bucket
 resource "aws_s3_bucket" "website-bucket" {
   bucket = "${var.website-bucket}"
