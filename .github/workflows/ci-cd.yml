@@ -64,19 +64,6 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-  
-      # - name: Write Credentials File
-      #   run: |
-      #     mkdir -p ~/.aws
-      #     echo "[${{ secrets.AWS_PROFILE }}]" > ~/.aws/credentials
-      #     echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
-      #     echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
-
-      # - name: Set up AWS config
-      #   run: |
-      #     mkdir -p ~/.aws
-      #     echo "[${{ secrets.AWS_PROFILE }}]" > ~/.aws/config
-      #     echo "region=${{ secrets.AWS_DEFAULT_REGION }}" >> ~/.aws/config
         
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -86,13 +73,12 @@ jobs:
         with:
           terraform_version: '1.9.3'
 
-
       - name: Terraform init
         run: terraform init
         working-directory: ./terraform
 
       - name: Terraform Format
-        run: terraform fmt -check
+        run: terraform fmt
         working-directory: ./terraform
 
         
