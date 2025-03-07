@@ -45,6 +45,10 @@ jobs:
 
   terraform:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
     needs: test
     name: Terraform Plan
     environment: production
