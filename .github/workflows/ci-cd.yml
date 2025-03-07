@@ -1,0 +1,97 @@
+name: CI/CD Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    name: Format Code with Prettier
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Prettier
+        run: npx prettier . --write
+
+  test:
+    runs-on: ubuntu-latest
+    needs: format
+    name: Run JavaScript Tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout/@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    needs: test
+    name: Terraform Plan
+    environment: production
+    env:
+          TF_VAR_AWS_PROFILE: ${{ secrets.AWS_PROFILE }}
+          TF_VAR_AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          TF_VAR_website-bucket: ${{ secrets.WEBSITE_BUCKET }}
+          TF_VAR_log-bucket: ${{ secrets.LOG_BUCKET }}
+          
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.9.3'
+
+      - name: Terraform init
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Terraform Format
+        run: terraform fmt
+        working-directory: ./terraform
+
+        
+      - name: Terraform plan
+        run: terraform plan -detailed-exitcode -out=tfplan -input=false
+        working-directory: ./terraform
+  
+        # On push to "main", build or change infrastructure according to Terraform configuration files
+        # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false tfplan
+        working-directory: ./terraform
+
+        
+          
