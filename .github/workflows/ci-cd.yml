@@ -27,7 +27,7 @@ jobs:
       - name: Run Prettier
         run: npx prettier . --write
 
-  test:
+  test-js:
     runs-on: ubuntu-latest
     needs: format
     name: Run JavaScript Tests
@@ -45,6 +45,23 @@ jobs:
 
       - name: Run tests
         run: npm test
+  
+  test-python:
+    runs-on: ubuntu-latest
+    needs: test-js
+    name: Run Python Tests
+    steps:
+      - name: Create Environment
+        run: make create-environment
+        
+      - name: Install requirements
+        run: make requirements
+
+      - name: Dev setup
+        run: make dev-setup
+
+      - name: Run security, formatting, unit and coverage tests
+        run: make run-checks
 
   terraform:
     runs-on: ubuntu-latest
@@ -52,7 +69,7 @@ jobs:
       contents: read
       pull-requests: write
       id-token: write
-    needs: test
+    needs: test-python
     name: Terraform Plan & Apply on push
     env:
           TF_VAR_AWS_PROFILE: ${{ secrets.AWS_PROFILE }}
