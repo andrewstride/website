@@ -5,10 +5,6 @@ data "archive_file" "VisitorCounterLambda" {
   output_path = "${path.module}/zips/visitorLambda_payload.zip"
 }
 
-import {
-  to = aws_lambda_function.VisitorCounterLambda
-  id = "arn:aws:lambda:eu-west-2:650251716475:function:VisitorCounterLambda"
-}
 
 resource "aws_lambda_function" "VisitorCounterLambda" {
   architectures                      = ["x86_64"]
@@ -27,11 +23,6 @@ resource "aws_lambda_function" "VisitorCounterLambda" {
   timeout                            = 3
 }
 
-
-import {
-  to = aws_lambda_permission.lambda_permission
-  id = "VisitorCounterLambda/80c7e015-0c26-51b3-acac-aaddc12bfe95"
-}
 
 resource "aws_lambda_permission" "lambda_permission" {
     function_name = "VisitorCounterLambda"
@@ -56,10 +47,6 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 
-import {
-    to = aws_iam_role.iam_for_lambda
-    id = "VisitorCounterLambda-role-lzti59f6"
-}
 resource "aws_iam_role" "iam_for_lambda" {
   name               = var.VC_Lambda_IAM_Role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
@@ -68,20 +55,12 @@ resource "aws_iam_role" "iam_for_lambda" {
 
 }
 
-import {
-    to = aws_iam_role_policy_attachment.AmazonDynamoDBFullAccess
-    id = "VisitorCounterLambda-role-lzti59f6/arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
-}
 
 resource "aws_iam_role_policy_attachment" "AmazonDynamoDBFullAccess" {
   role       = aws_iam_role.iam_for_lambda.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 }
 
-import {
-    to = aws_iam_role_policy_attachment.AWSLambdaBasicExecutionRole
-    id = "VisitorCounterLambda-role-lzti59f6/arn:aws:iam::650251716475:policy/service-role/AWSLambdaBasicExecutionRole-6ccc721e-bb28-429e-9f3a-58eaffde1f1c"
-}
 
 resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole" {
   role       = aws_iam_role.iam_for_lambda.name
@@ -90,10 +69,6 @@ resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole" {
 
 #####
 
-import {
-    to = aws_apigatewayv2_api.VisitorCounterAPI
-    id = "whnuzf2r2k"
-}
 resource "aws_apigatewayv2_api" "VisitorCounterAPI" {
   name          = "VisitorCounterAPI"
   protocol_type = "HTTP"
@@ -116,10 +91,6 @@ data "aws_apigatewayv2_api" "VisitorCounterAPI_id" {
     api_id = aws_apigatewayv2_api.VisitorCounterAPI.id
 }
 
-import {
-    to = aws_apigatewayv2_route.VisitorCounterRouteGET
-    id = "${data.aws_apigatewayv2_api.VisitorCounterAPI_id.api_id}/grkl5xc"
-}
 resource "aws_apigatewayv2_route" "VisitorCounterRouteGET" {
     route_key = "GET /VisitorCounterLambda"
     api_id = data.aws_apigatewayv2_api.VisitorCounterAPI_id.api_id
@@ -128,10 +99,6 @@ resource "aws_apigatewayv2_route" "VisitorCounterRouteGET" {
     target = "integrations/${var.VC_API_Integration_GET_ID}"
 }
 
-import {
-    to = aws_apigatewayv2_route.VisitorCounterRoutePOST
-    id = "whnuzf2r2k/qijpuj9"
-}
 resource "aws_apigatewayv2_route" "VisitorCounterRoutePOST" {
   route_key = "POST /VisitorCounterLambda"
   api_id = data.aws_apigatewayv2_api.VisitorCounterAPI_id.api_id
@@ -140,10 +107,6 @@ resource "aws_apigatewayv2_route" "VisitorCounterRoutePOST" {
   target = "integrations/${var.VC_API_Integration_POST_ID}"
 }
 
-import {
-    to = aws_apigatewayv2_integration.VisitorCounterIntegrationGET
-    id = "whnuzf2r2k/kak0jx6"
-}
 resource "aws_apigatewayv2_integration" "VisitorCounterIntegrationGET" {
   integration_type = "AWS_PROXY"
   api_id = data.aws_apigatewayv2_api.VisitorCounterAPI_id.api_id
@@ -157,10 +120,6 @@ resource "aws_apigatewayv2_integration" "VisitorCounterIntegrationGET" {
 
 data "aws_caller_identity" "current" {}
 
-import {
-    to = aws_apigatewayv2_integration.VisitorCounterIntegrationPOST
-    id = "whnuzf2r2k/h0q5jg6"
-}
 resource "aws_apigatewayv2_integration" "VisitorCounterIntegrationPOST" {
   integration_type = "AWS_PROXY"
   api_id = data.aws_apigatewayv2_api.VisitorCounterAPI_id.api_id
@@ -172,21 +131,12 @@ resource "aws_apigatewayv2_integration" "VisitorCounterIntegrationPOST" {
   timeout_milliseconds = 30000
 }
 
-import {
-    to = aws_apigatewayv2_stage.VisitorCounterStage
-    id = "whnuzf2r2k/$default"
-}
-
 resource "aws_apigatewayv2_stage" "VisitorCounterStage" {
   name = "$default"
   api_id = data.aws_apigatewayv2_api.VisitorCounterAPI_id.api_id
   auto_deploy = true
 }
 
-import {
-    to = aws_dynamodb_table.VisitorCounter
-    id = "VisitorCounter"
-}
 resource "aws_dynamodb_table" "VisitorCounter" {
     name = "VisitorCounter"
     billing_mode = "PAY_PER_REQUEST"
