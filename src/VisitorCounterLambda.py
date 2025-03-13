@@ -18,9 +18,7 @@ def lambda_handler(event, context):
     except Exception as e:
         return {
             "statusCode": 400,
-            "body": json.dumps(
-                "Bad Request"
-            ),
+            "body": json.dumps("Bad Request"),
             "error": json.dumps(str(e)),
         }
 
@@ -42,11 +40,8 @@ def increment_visitor_count(table):
 
 def get_visitor_count(table):
     response = table.get_item(Key={"id": "VisitCount"})
-    if not response.get('Item'):
-        return {
-           "statusCode": 500,
-            "body": json.dumps("Item not found") 
-        }
+    if not response.get("Item"):
+        return {"statusCode": 500, "body": json.dumps("Item not found")}
     try:
         response["Item"]["visitCount"] = int(response["Item"]["visitCount"])
         return {"statusCode": 200, "body": json.dumps(response["Item"])}
@@ -54,5 +49,5 @@ def get_visitor_count(table):
         return {
             "statusCode": 500,
             "body": json.dumps("visitCount not found"),
-            "error": json.dumps({str(type(e).__name__): str(e)})
+            "error": json.dumps({str(type(e).__name__): str(e)}),
         }
