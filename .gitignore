@@ -4,3 +4,5 @@ terraform.tfvars
 .terraform.lock.hcl
 node_modules
 zips
+venv
+__pycache__
