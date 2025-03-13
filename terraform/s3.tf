@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "test-bucket" {
 
 # Website bucket
 resource "aws_s3_bucket" "website-bucket" {
-  bucket = "${var.website-bucket}"
+  bucket = var.website-bucket
 }
 data "aws_s3_bucket" "selected-bucket" {
   bucket = aws_s3_bucket.website-bucket.bucket

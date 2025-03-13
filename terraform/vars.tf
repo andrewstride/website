@@ -17,18 +17,3 @@ variable "log-bucket" {
   type    = string
   default = null
 }
-
-variable "VC_API_Integration_GET_ID" {
-  type = string
-  default = null
-}
-
-variable "VC_API_Integration_POST_ID" {
-  type = string
-  default = null
-}
-
-variable "VC_Lambda_IAM_Role_name" {
-  type = string
-  default = null
-}
