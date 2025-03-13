@@ -33,7 +33,7 @@ jobs:
     name: Run JavaScript Tests
     steps:
       - name: Checkout repository
-        uses: actions/checkout/@v4
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -51,6 +51,14 @@ jobs:
     needs: test-js
     name: Run Python Tests
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: Create Environment
         run: make create-environment
         
