@@ -21,7 +21,7 @@ def lambda_handler(event, context):
             "body": json.dumps(
                 "Bad Request"
             ),
-            "error": str(e),
+            "error": json.dumps(str(e)),
         }
 
 

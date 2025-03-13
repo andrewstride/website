@@ -1,6 +1,5 @@
 import boto3
 import pytest
-import os
 import json
 from unittest.mock import patch
 from moto import mock_aws
@@ -138,12 +137,58 @@ class TestGetCount:
         assert response['body'] == json.dumps('visitCount not found')
         assert response['error'] == json.dumps({"KeyError": "'visitCount'"})
 
-# HAPPY PATHS
-# Correct Events
-# Visitor Count returned
-# Assert handler invokes functions once
-# Visitor Count incremented
+
+class TestHandler:
+    @patch('src.VisitorCounterLambda.datetime')
+    @patch('src.VisitorCounterLambda.boto3')
+    def test_increments_counter_and_returns_response(self, mock_boto3, mock_datetime, ddb_with_table):
+        mock_boto3.resource.return_value = ddb_with_table
+        mock_datetime.now.return_value = 'test'
+        event = {"requestContext": {"http": {"method": "POST"}}}
+        response = lambda_handler(event, {})
+        item = ddb_with_table.Table("VisitorCounter").get_item(Key={"id": "VisitCount"})['Item']
+        assert int(item["visitCount"]) == 1235
+        assert response == {'body': '{"visitCount": 1235, "timestamp": "test"}',
+                            'statusCode': 200}
+        
+    @patch('src.VisitorCounterLambda.boto3')
+    def test_gets_count(self, mock_boto3, ddb_with_table):
+        mock_boto3.resource.return_value = ddb_with_table
+        event = {"requestContext": {"http": {"method": "GET"}}}
+        response = lambda_handler(event, {})
+        assert response == {'body': '{"id": "VisitCount", "visitCount": 1234, "timestamp": "1234"}',
+                            'statusCode': 200}
+
+    @patch('src.VisitorCounterLambda.boto3')
+    def test_handles_malformed_event(self, mock_boto3, ddb_with_table):
+        mock_boto3.resource.return_value = ddb_with_table
+        event = "malformed event"
+        response = lambda_handler(event, {})
+        assert response == {"statusCode": 400,
+                            "body": json.dumps("Bad Request"),
+                            "error": json.dumps("string indices must be integers, not 'str'")}
+        
+    @patch('src.VisitorCounterLambda.boto3')
+    def test_handles_table_error(self, mock_boto3, ddb_mock):
+        mock_boto3.resource.return_value = ddb_mock
+        event = {"requestContext": {"http": {"method": "GET"}}}
+        response = lambda_handler(event, {})
+        assert response == {"statusCode": 400,
+                            "body": json.dumps("Bad Request"),
+                            "error": json.dumps("An error occurred (ResourceNotFoundException) when calling the GetItem operation: Requested resource not found")}
+
+    @patch('src.VisitorCounterLambda.boto3')
+    def test_handles_invalid_method(self, mock_boto3, ddb_with_table):
+        mock_boto3.resource.return_value = ddb_with_table
+        event = {"requestContext": {"http": {"method": "PATCH"}}}
+        response = lambda_handler(event, {})
+        assert response == {"statusCode": 405, "body": json.dumps("Method Not Allowed")}
+
+
+        
+    
+
+
 
 # SAD PATHS
-# Handles malformed event input
 # Returns 500 for table error
