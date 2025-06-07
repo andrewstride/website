@@ -42,6 +42,13 @@ footer {
   height: auto;
 }
 
+.project-image-medium {
+  /* align-content: center;
+    float: right; */
+  width: 450px;
+  height: auto;
+}
+
 .project-image-small {
   align-content: center;
   float: right;
